@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anthony's Little Harbour Series</title>
+<meta name="description" content="Heart-warming seaside picture books for children aged 4 and up, by Anthony Goode, illustrated by Tom Harding.">
+<style>
+@font-face{font-family:"Short Stack";src:url(fonts/short-stack.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Nunito;src:url(fonts/nunito-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Nunito;src:url(fonts/nunito-700.woff2) format("woff2");font-weight:600 700;font-display:swap}
+@font-face{font-family:Nunito;src:url(fonts/nunito-800.woff2) format("woff2");font-weight:800;font-display:swap}
+:root{
+  --sky-top:#7cc8f2; --sky:#bfe6fa; --sea:#1d9be0; --sea-deep:#0d5bb5; --night:#0f2a6b; --ink:#123a78;
+  --title:#1767d1; --oscar:#ffe21c; --noah:#ff7a12; --tom:#f4ae1a; --elsie:#b7f0ab; --crew:#e0282e;
+  --stone:#d9d5cb; --paper:#ffffff; --text:#1d2f4f; --muted:#4b5f80;
+  --radius:22px; --shadow:0 10px 30px rgba(10,50,110,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--text);background:var(--sky);font-size:18px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--title)}
+h1,h2,h3,.hand{font-family:"Short Stack",cursive;font-weight:400;line-height:1.15;margin:0}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+.eyebrow{font-family:"Short Stack",cursive;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--sea-deep)}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:.5em;font-family:"Short Stack",cursive;font-size:1.05rem;text-decoration:none;padding:.8em 1.4em;border-radius:999px;border:3px solid #10305f;background:var(--oscar);color:#10305f;box-shadow:0 5px 0 #10305f;transition:transform .15s, box-shadow .15s}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #10305f}
+.btn.ghost{background:#fff}
+.btn.orange{background:var(--noah);color:#fff}
+/* book-style text box: white rounded panel with soft halo, like the pages */
+.bookbox{background:linear-gradient(170deg,#fff 55%,#eef8ff);border-radius:var(--radius);padding:1.4rem 1.6rem;box-shadow:0 0 0 6px rgba(255,255,255,.45),var(--shadow)}
+.outlined{color:var(--title);-webkit-text-stroke:0;text-shadow:3px 3px 0 #fff,-3px 3px 0 #fff,3px -3px 0 #fff,-3px -3px 0 #fff,0 3px 0 #fff,3px 0 0 #fff,0 -3px 0 #fff,-3px 0 0 #fff,0 8px 18px rgba(13,91,181,.35)}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:50;padding:14px 0 26px;transition:background .3s}
+header::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .35s;background:linear-gradient(rgba(236,248,255,.94),rgba(236,248,255,.8) 55%,rgba(236,248,255,0));backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+header.scrolled::before{opacity:1}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--title)}
+.logo img{height:52px;width:auto;filter:drop-shadow(0 3px 4px rgba(13,91,181,.25))}
+.logo span{font-family:"Short Stack",cursive;font-size:1.15rem;line-height:1.05;text-shadow:0 0 12px rgba(255,255,255,.9),0 0 2px #fff}
+.logo small{display:block;font-size:.72rem;letter-spacing:.12em;color:var(--sea-deep)}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.menu a{display:block;padding:.5em .9em;border-radius:999px;text-decoration:none;font-weight:700;color:var(--ink);font-size:.95rem}
+.menu a:hover{background:rgba(255,255,255,.55)}
+.menu .cta a{background:var(--oscar);border:2px solid #10305f}
+.burger{display:none;border:0;font:inherit;font-family:"Short Stack",cursive;color:var(--ink);padding:.5em 1em;border-radius:14px;background:rgba(255,255,255,.6);cursor:pointer}
+@media (max-width:960px){
+  .burger{display:block}
+  .menu{display:none;position:absolute;left:16px;right:16px;top:76px;flex-direction:column;background:linear-gradient(#fff,#e8f6fe);border-radius:24px;padding:12px;box-shadow:var(--shadow)}
+  .menu.open{display:flex}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;margin-top:-92px;padding:130px 0 0;background:radial-gradient(ellipse 55% 45% at 82% 30%,rgba(255,251,214,.9),rgba(255,251,214,0) 70%),radial-gradient(ellipse 60% 50% at 10% 0%,rgba(255,255,255,.5),rgba(255,255,255,0) 70%),linear-gradient(#5fb8ee,#9fd8f6 45%,#cdeefc 80%);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:end;gap:24px;position:relative}
+.hero-copy{padding-bottom:150px;position:relative;z-index:3}
+.hero h1{font-size:clamp(2.5rem,6vw,4.6rem)}
+.hero h1 .small{display:block;font-size:.42em;letter-spacing:.06em;margin-bottom:.2em}
+.hero p.lede{font-size:1.2rem;max-width:30em;margin:1.2rem 0 1.8rem;color:#173b6d;font-weight:600}
+.hero .actions{display:flex;flex-wrap:wrap;gap:14px}
+.scene{position:relative;height:clamp(360px,44vw,560px)}
+.scene .lighthouse{position:absolute;right:4%;bottom:8%;height:88%;width:auto;z-index:1;filter:drop-shadow(0 8px 10px rgba(0,40,90,.25))}
+.scene .beam{position:absolute;right:9%;top:16%;width:130%;height:120px;transform-origin:right center;background:radial-gradient(ellipse at right,rgba(255,250,200,.85),rgba(255,250,200,0) 70%);clip-path:polygon(100% 45%,0 0,0 100%,100% 55%);animation:sweep 7s ease-in-out infinite;z-index:1;mix-blend-mode:screen}
+@keyframes sweep{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
+.boat{position:absolute;z-index:3;filter:drop-shadow(0 6px 6px rgba(0,40,90,.2));animation:bob 4s ease-in-out infinite}
+.boat.tom{left:20%;bottom:16%;width:23%;animation-delay:-1s}
+.boat.noah{left:40%;bottom:9%;width:32%;animation-delay:-2.2s}
+.boat.oscar{left:-2%;bottom:7%;width:25%;animation-delay:-.4s}
+.boat.elsie{left:68%;bottom:3%;width:21%;animation-delay:-3s;z-index:4}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.gull{position:absolute;width:90px;top:120px;left:-120px;z-index:4;animation:fly 26s linear infinite}
+@keyframes fly{0%{transform:translate(0,0)}50%{transform:translate(60vw,-30px)}100%{transform:translate(120vw,10px)}}
+.cloud{position:absolute;opacity:.95;z-index:1;animation:drift 60s linear infinite}
+.cloud.c1{top:110px;left:46%;width:220px}
+.cloud.c2{top:190px;left:8%;width:160px;animation-duration:80s;opacity:.8}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-40vw)}}
+.hero .sea{position:absolute;left:0;right:0;bottom:0;height:150px;background:url(img/sea-strip.webp) center bottom/auto 150px repeat-x;z-index:2;pointer-events:none}
+.hero .sea::after{content:"";position:absolute;left:0;right:0;bottom:0;height:55px;background:linear-gradient(rgba(60,200,249,0),#3cc8f9)}
+
+/* ---------- section scaffold ---------- */
+section{padding:90px 0;position:relative;overflow-x:clip}
+.sec-head{text-align:center;max-width:720px;margin:0 auto 48px}
+.sec-head h2{font-size:clamp(2rem,4.4vw,3.1rem);margin:.2em 0 .3em}
+.sec-head p{margin:0;color:var(--muted);font-size:1.1rem}
+
+/* ---------- books ---------- */
+.books{background:radial-gradient(ellipse 70% 40% at 50% 8%,rgba(255,255,255,.28),rgba(255,255,255,0) 70%),linear-gradient(#3cc8f9,#2fa9ec 30%,#2384d6 70%,#183f8e)}
+.books .sec-head h2,.books .sec-head p{color:#fff}
+.books .eyebrow{color:#e9f7ff}
+.book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px}
+.book{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:start}
+.book .cover{border-radius:10px 14px 14px 10px;box-shadow:-6px 0 0 #0e3d80 inset,0 14px 26px rgba(0,30,80,.35);aspect-ratio:595/624;overflow:hidden;transform:rotate(-2deg);transition:transform .25s;position:relative}
+.book:hover .cover{transform:rotate(0) scale(1.03)}
+.book .cover img{width:100%;height:100%;object-fit:cover}
+.book h3{font-size:1.6rem;color:var(--title)}
+.book .meta{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0}
+.pill{font-size:.8rem;font-weight:800;padding:.25em .8em;border-radius:999px;background:var(--sky);color:var(--ink)}
+.price{font-family:"Short Stack",cursive;font-size:1.6rem;color:var(--sea-deep);margin:.4rem 0 1rem}
+/* stand-in Noah cover built from book art */
+.cover.noah-cover{background:url(img/night.webp) 70% 50%/cover;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:12px 8px 10px;text-align:center}
+.noah-cover .t{font-family:"Short Stack",cursive;color:#fff;font-size:1.25rem;line-height:1;text-shadow:0 2px 0 var(--title),0 0 10px rgba(0,0,0,.4)}
+.noah-cover .t b{font-weight:400;display:block;font-size:1.45em}
+.noah-cover img{width:78%;height:auto!important;object-fit:contain!important;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}
+.noah-cover .a{font-family:"Short Stack",cursive;color:var(--oscar);font-size:.7rem;letter-spacing:.14em}
+.trade{margin-top:46px;display:flex;gap:22px;align-items:center}
+.trade img{width:150px;flex:none}
+
+/* ---------- story peek ---------- */
+.story{background:var(--night) url(img/night.webp) center/cover;color:#fff;padding:110px 0 130px;overflow:hidden}
+.story::before{content:"";position:absolute;inset:0;background:linear-gradient(#183f8e,rgba(24,63,142,0) 22%,rgba(24,63,142,0) 78%,#1d5fc0),linear-gradient(90deg,rgba(10,30,90,.55),rgba(10,30,90,0) 60%)}
+.story .wrap{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.story .bookbox{color:var(--text);font-size:1.15rem}
+.story .bookbox p{margin:0 0 .8em}
+.story h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:22px;text-shadow:0 3px 12px rgba(0,0,0,.4)}
+.story .eyebrow{color:var(--oscar)}
+.story .wave{width:100%;max-width:520px;margin-left:auto;animation:rock 5s ease-in-out infinite;transform-origin:30% 100%;filter:drop-shadow(0 20px 30px rgba(0,0,0,.35))}
+@keyframes rock{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.boom{font-family:"Short Stack",cursive;color:var(--noah);font-size:1.3em}
+
+/* ---------- characters ---------- */
+.cast{background:radial-gradient(circle at 50% 45%,#fff 0,#eaf7ff 18%,rgba(255,255,255,0) 42%),linear-gradient(#1d5fc0,#2c9fe8 22%,#56b9f0 70%,#a9dcf7);overflow:hidden}
+.cast .sec-head h2{color:var(--title)}
+.cast-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:70px 36px;padding-top:40px}
+.char{text-align:center}
+.medal{position:relative;width:min(240px,100%);aspect-ratio:1;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e7f6ff,#b5dff7 70%);box-shadow:inset 0 -10px 0 rgba(255,255,255,.35),0 12px 24px rgba(0,50,120,.28)}
+.medal::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 20% 120%,rgba(255,255,255,.0) 0 14px,rgba(255,255,255,.35) 15px 17px);opacity:.55}
+.medal img{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:92%;z-index:2;transition:transform .3s;filter:drop-shadow(0 6px 6px rgba(0,40,90,.25))}
+.char:hover .medal img{transform:translateX(-50%) translateY(-10px) rotate(-3deg)}
+.medal.tall img{width:auto;height:118%;bottom:8%}
+.medal.round{overflow:hidden}
+.medal.round img{bottom:0;width:100%}
+.char h3{color:#fff;font-size:1.9rem;letter-spacing:.06em;margin:18px 0 6px;text-shadow:0 3px 0 var(--title),0 6px 14px rgba(0,40,110,.35)}
+.char p{margin:0 auto;max-width:18em;color:#0d2c5a;font-weight:600}
+
+/* ---------- about ---------- */
+.about{background:radial-gradient(ellipse 50% 60% at 20% 55%,rgba(255,226,140,.35),rgba(255,226,140,0) 70%),linear-gradient(#a9dcf7,#e4f3f6 18%,#fbf3df 45%,#fdf7e8 80%,#e6f4fb)}
+
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}
+.postcard{position:relative;background:#fff;padding:14px 14px 60px;border-radius:6px;box-shadow:0 18px 34px rgba(60,40,10,.22);transform:rotate(-3deg);max-width:400px;margin:auto}
+.postcard img.photo{border-radius:3px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.postcard .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:"Short Stack",cursive;color:var(--ink)}
+.postcard .peek{position:absolute;right:-70px;bottom:-30px;width:170px;transform:rotate(3deg);filter:drop-shadow(0 8px 8px rgba(0,0,0,.2))}
+.about h2{font-size:clamp(2rem,4vw,3rem);color:var(--title);margin:.2em 0 .5em}
+.about p{margin:0 0 1em}
+.about .sig{width:220px;margin-top:10px}
+
+/* ---------- reviews ---------- */
+.reviews{background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(255,255,255,.55),rgba(255,255,255,0) 70%),linear-gradient(#e6f4fb,#a8dcf6 50%,#cfecfb)}
+.review-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.review{position:relative;font-size:1.05rem}
+.review::after{content:"";position:absolute;left:34px;bottom:-16px;border:16px solid transparent;border-top-color:#fff;border-bottom:0}
+.review q{display:block;font-weight:700;color:var(--ink)}
+.review cite{display:block;margin-top:.8em;font-style:normal;font-family:"Short Stack",cursive;color:var(--sea-deep);font-size:.9rem}
+.review-gull{position:absolute;right:6%;top:40px;width:110px;transform:scaleX(-1)}
+
+/* ---------- colouring + coming soon ---------- */
+.extras{background:linear-gradient(#cfecfb,#f2faff 35%,#f2faff 65%,#bfe6fa)}
+.extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.card{border-radius:28px;padding:34px;position:relative;overflow:hidden}
+.card h2{font-size:clamp(1.7rem,3vw,2.3rem);margin:.2em 0 .5em}
+.card.colour{background:linear-gradient(160deg,#fffdf2,#fff3c4);border:3px dashed #f2c400}
+.card.colour img{border-radius:14px;margin:18px 0;border:2px solid #eee;background:#fff}
+.card.soon{background:radial-gradient(circle at 80% 15%,rgba(255,240,170,.35),rgba(255,240,170,0) 45%),linear-gradient(160deg,#0f2a6b,#1d5fc0 60%,#2c9fe8);color:#fff;display:flex;flex-direction:column}
+.card.soon .eyebrow{color:var(--oscar)}
+.card.soon .peekers{display:flex;align-items:flex-end;justify-content:center;gap:18px;margin-top:auto;padding-top:30px}
+.card.soon .peekers img{height:160px;width:auto;animation:bob 4s ease-in-out infinite}
+.card.soon .peekers img:nth-child(2){animation-delay:-1.5s;height:120px}
+
+.mystery{flex:none;display:inline-grid;place-items:center;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);border:3px dashed rgba(255,255,255,.6);font-family:"Short Stack",cursive;font-size:3rem;color:var(--oscar)}
+
+/* ---------- contact & footer ---------- */
+.contact{background:radial-gradient(ellipse 40% 50% at 78% 55%,rgba(255,255,255,.35),rgba(255,255,255,0) 70%),linear-gradient(#bfe6fa,#6cc6f2 25%,#2fa3e6 65%,#1d8ad8);color:#fff;padding-bottom:0}
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.contact h2{font-size:clamp(2rem,4vw,3rem);margin:.2em 0 .4em;text-shadow:0 3px 0 var(--title),0 6px 16px rgba(13,60,140,.35)}
+.contact .bookbox{color:var(--text)}
+.contact dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+.contact dt{font-family:"Short Stack",cursive;color:var(--sea-deep)}
+.contact dd{margin:0;font-weight:700;word-break:break-word}
+.socials{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.socials a{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:.5em 1em;border-radius:999px;background:var(--sky);text-decoration:none;font-weight:800;color:var(--ink)}
+.crew{width:min(380px,80%);margin:0 auto;filter:drop-shadow(0 12px 14px rgba(0,30,80,.3))}
+.wall{height:78px;margin-top:70px;border-top:6px solid #b9b3a3;background-color:#d9d4c7;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='52'%3E%3Cg fill='%23e8e4d9' stroke='%239d978a' stroke-width='2'%3E%3Crect x='2' y='2' width='54' height='22' rx='6'/%3E%3Crect x='62' y='2' width='56' height='22' rx='6'/%3E%3Crect x='-28' y='28' width='56' height='22' rx='6'/%3E%3Crect x='32' y='28' width='56' height='22' rx='6'/%3E%3Crect x='92' y='28' width='56' height='22' rx='6'/%3E%3C/g%3E%3C/svg%3E")}
+footer{background:linear-gradient(#1565c0,#0d3f8c);color:#d7ecff;padding:26px 0 30px;font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer a{color:#fff}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-grid,.story .wrap,.about-grid,.contact-grid,.extras-grid{grid-template-columns:1fr}
+  .hero-copy{padding-bottom:0}
+  .scene{height:min(92vw,440px)}
+  .book-grid{grid-template-columns:1fr}
+  .review-grid{grid-template-columns:1fr 1fr}
+  .cast-grid{grid-template-columns:1fr 1fr;gap:44px 20px}
+  .postcard .peek{right:-20px;width:130px}
+  .review-gull{display:none}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .book{grid-template-columns:1fr;gap:20px}
+  .book .cover{width:62%;margin:0 auto}
+  .trade img{width:110px}
+  .card{padding:26px 22px}
+  .card.soon .peekers img{height:110px}.card.soon .peekers img:nth-child(2){height:84px}
+  .scene .lighthouse{height:78%;bottom:24%;right:0}
+  .boat.noah{width:40%;left:34%}.boat.tom{width:28%}.boat.oscar{width:32%}.boat.elsie{width:26%;left:72%}
+  .review-grid{grid-template-columns:1fr}
+  .cast-grid{grid-template-columns:1fr 1fr;gap:36px 14px}
+  .char h3{font-size:1.4rem}
+  .char p{font-size:.9rem}
+  .trade{flex-direction:column;align-items:flex-start}
+  .logo span{font-size:.9rem}
+  .noah-cover .t{font-size:.85rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="#top"><img src="img/sophie.webp" alt=""><span>Anthony's<br>Little Harbour <small>SERIES</small></span></a>
+      <button class="burger" aria-expanded="false" aria-controls="menu" onclick="const m=document.getElementById('menu');const o=m.classList.toggle('open');this.setAttribute('aria-expanded',o)">Menu</button>
+      <ul class="menu" id="menu" onclick="if(event.target.tagName==='A'){this.classList.remove('open')}">
+        <li><a href="#books">Books</a></li>
+        <li><a href="#characters">Characters</a></li>
+        <li><a href="#about">About Anthony</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#coming-soon">Coming soon</a></li>
+        <li class="cta"><a href="#contact">Order a book</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title">
+  <img class="cloud c1" src="img/cloud.webp" alt="">
+  <img class="cloud c2" src="img/cloud.webp" alt="">
+  <img class="gull" src="img/gull.webp" alt="">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Seaside stories for ages 4+</p>
+      <h1 id="hero-title" class="outlined"><span class="small">Welcome to</span>Anthony's Little Harbour</h1>
+      <p class="lede">Heart-warming picture books about a little Cornish-style harbour, its brave lifeboat, its kind lighthouse and the small boats who call it home. Each one ends with a gentle lesson to talk about together.</p>
+      <div class="actions">
+        <a class="btn" href="#books">See the books</a>
+        <a class="btn ghost" href="#characters">Meet the harbour friends</a>
+      </div>
+    </div>
+    <div class="scene" aria-label="Sophie the lighthouse watches over Oscar, Tom, Noah and Elsie in the harbour">
+      <div class="beam"></div>
+      <img class="lighthouse" src="img/sophie_scene.webp" alt="Sophie the lighthouse">
+      <img class="boat tom" src="img/tom.webp" alt="Tom the sailing boat">
+      <img class="boat noah" src="img/noah.webp" alt="Noah the lifeboat">
+      <img class="boat oscar" src="img/oscar.webp" alt="Oscar the dinghy">
+      <img class="boat elsie" src="img/elsie.webp" alt="Elsie the little boat">
+    </div>
+  </div>
+  <div class="sea" aria-hidden="true"></div>
+</section>
+
+<!-- BOOKS -->
+<section class="books" id="books" aria-labelledby="books-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">The book catalogue</p>
+      <h2 id="books-title">Stories from the little harbour</h2>
+      <p>Written by Anthony Goode and illustrated by Tom Harding. Order direct from Anthony.</p>
+    </div>
+    <div class="book-grid">
+      <article class="book bookbox">
+        <div class="cover"><img src="img/cover-oscar.webp" alt="Cover of Oscar and the Little Harbour"></div>
+        <div>
+          <h3>Oscar and the Little Harbour</h3>
+          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">Colouring page inside</span></div>
+          <p>Oscar, a young dinghy, thinks life inside the harbour walls is a bit boring, so he sets off to chase the waves. When the sea turns rough, he finds out just how many friends he has.</p>
+          <p class="price">£9.99</p>
+          <a class="btn" href="mailto:contactanthony@anthonyslittleharbourseries.co.uk?subject=Order%3A%20Oscar%20and%20the%20Little%20Harbour">Order a copy</a>
+        </div>
+      </article>
+      <article class="book bookbox">
+        <!-- Stand-in cover made from book artwork: swap for the real Noah cover image -->
+        <div class="cover noah-cover"><div class="t">Noah <span style="font-size:.6em">and the</span><b>Little Harbour</b></div><img src="img/noah.webp" alt=""><div class="a">ANTHONY GOODE</div></div>
+        <div>
+          <h3>Noah and the Little Harbour</h3>
+          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">New</span></div>
+          <p>Noah the lifeboat is used to keeping watch, but his day gets far busier than expected when a mischievous boy starts an emergency.</p>
+          <p class="price">£9.99</p>
+          <a class="btn" href="mailto:contactanthony@anthonyslittleharbourseries.co.uk?subject=Order%3A%20Noah%20and%20the%20Little%20Harbour">Order a copy</a>
+        </div>
+      </article>
+    </div>
+    <div class="trade bookbox">
+      <img src="img/crew_scene.webp" alt="Pete and Andy, the lifeboat crew, enjoying a cup of tea">
+      <div>
+        <h3 class="hand" style="color:var(--title);font-size:1.4rem">Shops, schools and bulk orders</h3>
+        <p style="margin:.4em 0 0">Want more than a few copies? Anthony offers discounts for shops and businesses that sell the books. Get in touch with how many you need. Payment is by bank transfer (BACS), and your copies are sent once it has cleared.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY PEEK -->
+<section class="story" aria-labelledby="story-title">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">A peek inside</p>
+      <h2 id="story-title">“It would be fun to chase the waves outside…”</h2>
+      <div class="bookbox">
+        <p>However, one day, Oscar, a young dinghy, thought that it was a bit boring just bobbing within the harbour walls, and thought that it would be fun to leave its safety, and chase the waves outside.</p>
+        <p>He fought against the waves, but they were coming at him from all directions, then suddenly, there was a loud <span class="boom">BOOM!</span></p>
+        <p style="margin:0;color:var(--muted);font-size:.95rem">From <em>Oscar and the Little Harbour</em></p>
+      </div>
+    </div>
+    <img class="wave" src="img/oscar_wave.webp" alt="Oscar tossed on top of a huge wave">
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section class="cast" id="characters" aria-labelledby="cast-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" style="color:#fff">Who's who</p>
+      <h2 id="cast-title" class="outlined">Meet the harbour friends</h2>
+    </div>
+    <div class="cast-grid">
+      <div class="char"><div class="medal"><img src="img/noah.webp" alt=""></div><h3>NOAH</h3><p>The brave lifeboat. When someone's in trouble at sea, Noah is first out of the harbour.</p></div>
+      <div class="char"><div class="medal tall"><img src="img/sophie.webp" alt=""></div><h3>SOPHIE</h3><p>The lighthouse. She stands proud and strong on the harbour wall, and her beam guides everyone home.</p></div>
+      <div class="char"><div class="medal"><img src="img/oscar.webp" alt=""></div><h3>OSCAR</h3><p>A young dinghy with a big sense of adventure, who's still learning that the sea isn't always friendly.</p></div>
+      <div class="char"><div class="medal tall"><img src="img/tom.webp" alt="" style="height:105%"></div><h3>TOM</h3><p>A cheerful little sailing boat, and one of Oscar's friends in the harbour.</p></div>
+      <div class="char"><div class="medal round"><img src="img/peteandy.webp" alt=""></div><h3>PETE &amp; ANDY</h3><p>Noah's lifeboat crew, never far from a warm mug of tea.</p></div>
+      <div class="char"><div class="medal"><img src="img/elsie.webp" alt=""></div><h3>ELSIE</h3><p>A friendly little boat who's always happy bobbing safely inside the harbour walls.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="wrap about-grid">
+    <div class="postcard">
+      <img class="photo" src="img/anthony.webp" alt="Anthony Goode, author">
+      <div class="cap">Anthony Goode</div>
+      <img class="peek" src="img/oscar.webp" alt="">
+    </div>
+    <div>
+      <p class="eyebrow">About the author</p>
+      <h2 id="about-title">Hello, I'm Anthony</h2>
+      <p>I grew up in a small West Cornwall town, and spent my whole childhood on its beaches and coastline. One of my fondest memories is Marazion beach. Not the postcard view in front of St Michael's Mount, but the more rugged stretch known as “Top Town” beach and its tiny harbour, “Top Tieb Harbour”. We spent many happy hours there swimming, walking and fishing.</p>
+      <p>My family has roots at St Michael's Mount, and I'm sure that coast is where these stories come from. Now that I'm all but retired, I finally have time to write them down. My aunt once told me to “grow up”, and I'm in no hurry to.</p>
+      <p>I hope the Little Harbour books bring a little of the atmosphere of the coast to children everywhere, especially those who haven't grown up beside the sea. The stories are brought to life by my illustrator, Tom Harding, and we swap ideas for every book.</p>
+      <img class="sig" src="img/signature.webp" alt="Anthony's signature">
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews" aria-labelledby="reviews-title">
+  <img class="review-gull" src="img/gull.webp" alt="">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Reader reviews</p>
+      <h2 id="reviews-title" class="outlined">What families are saying</h2>
+    </div>
+    <div class="review-grid">
+      <figure class="review bookbox" style="margin:0"><q>The colours and illustrations are truly remarkable and appeal so much to children.</q><cite>A delighted parent</cite></figure>
+      <figure class="review bookbox" style="margin:0"><q>I love the way Anthony writes; you are immediately immersed in the story.</q><cite>An avid reader</cite></figure>
+      <figure class="review bookbox" style="margin:0"><q>My child absolutely adores these books!</q><cite>Happy customer</cite></figure>
+      <figure class="review bookbox" style="margin:0"><q>Anthony's stories are truly captivating. A wonderful find for anyone who loves charm and imagination!</q><cite>A delighted reader</cite></figure>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRAS -->
+<section class="extras" id="coming-soon" aria-label="Colouring page and upcoming stories">
+  <div class="wrap extras-grid">
+    <div class="card colour">
+      <p class="eyebrow">Free for little artists</p>
+      <h2 style="color:var(--title)">Scan, print and colour me in!</h2>
+      <p style="margin:0">Every book ends with a colouring page. Here's the one from <em>Oscar</em> to print at home.</p>
+      <img src="img/colouring-preview.webp" alt="Black and white colouring page of Oscar, Sophie and the harbour">
+      <a class="btn" href="img/colouring-page.jpg" download="oscar-colouring-page.jpg">Download the colouring page</a>
+    </div>
+    <div class="card soon">
+      <p class="eyebrow">Coming soon</p>
+      <h2>The next story is on its way</h2>
+      <p style="margin:0">A brand new Little Harbour adventure is being illustrated right now, with more stories to follow. Who do you think it will be about?</p>
+      <div class="peekers">
+        <img src="img/tom.webp" alt="Tom"><img src="img/elsie.webp" alt="Elsie"><span class="mystery" aria-label="A new character">?</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">Get in touch</p>
+      <h2 id="contact-title">Order a book or say hello</h2>
+      <div class="bookbox">
+        <dl>
+          <dt>Email</dt><dd><a href="mailto:contactanthony@anthonyslittleharbourseries.co.uk">contactanthony@anthonyslittleharbourseries.co.uk</a></dd>
+          <dt>Based in</dt><dd>Matlock, Derbyshire</dd>
+        </dl>
+        <div class="socials">
+          <a href="https://facebook.com/Anthony%20Goode" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://instagram.com/agoode46" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://x.com/AnthonyG56593" target="_blank" rel="noopener">X</a>
+        </div>
+      </div>
+    </div>
+    <img class="crew" src="img/peteandy.webp" alt="Pete and Andy, the lifeboat crew, waving you off" style="border-radius:50%">
+  </div>
+  <div class="wall" aria-hidden="true"></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Anthony's Little Harbour Series</span>
+    <span>Illustrations by Tom Harding</span>
+  </div>
+</footer>
+<script>const h=document.querySelector("header");const f=()=>h.classList.toggle("scrolled",scrollY>40);addEventListener("scroll",f,{passive:true});f();</script>
+</body>
+</html>
