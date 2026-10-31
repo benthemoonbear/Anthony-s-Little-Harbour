@@ -72,17 +72,22 @@ header.scrolled::before{opacity:1}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
 .gull{position:absolute;width:90px;top:120px;left:-120px;z-index:4;animation:fly 26s linear infinite}
 @keyframes fly{0%{transform:translate(0,0)}50%{transform:translate(60vw,-30px)}100%{transform:translate(120vw,10px)}}
-.cloud{position:absolute;opacity:.9;z-index:1;animation:drift 60s linear infinite;filter:blur(1px)}
-.cloud.c1{top:95px;left:44%;width:270px}
-.cloud.c2{top:175px;left:6%;width:200px;animation-duration:80s;opacity:.65}
-@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-40vw)}}
+.clouds{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.cloud{position:absolute;left:0;top:var(--t);width:var(--w);opacity:var(--o,.85);filter:blur(var(--b,1px));animation:drift var(--d,90s) linear infinite;animation-delay:var(--dl,0s);transform:translateX(var(--x,0)) scaleX(var(--s,1))}
+.cloud.flip{--s:-1}
+@keyframes drift{from{transform:translateX(100vw) scaleX(var(--s,1))}to{transform:translateX(-100%) scaleX(var(--s,1))}}
+.reviews>.wrap,.contact>.wrap,.cast>.wrap{position:relative;z-index:2}
 .hero .sea{position:absolute;left:0;right:0;pointer-events:none;background-repeat:repeat-x}
 .hero .sea.back{bottom:40px;height:210px;background-image:url(img/sea-back.webp);background-size:2966px 210px;z-index:2;animation:tide 160s linear infinite}
 .hero .sea.front{bottom:0;height:112px;background-image:url(img/sea-front.webp);background-size:1582px 112px;z-index:5;animation:tide2 90s linear infinite}
-.hero .sea.front::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(rgba(60,200,249,0),#3cc8f9 90%)}
+/* painted water continues into the next section, mirrored so the join is seamless, then dissolves */
+.books::before{content:"";position:absolute;left:0;right:0;top:0;height:112px;background:url(img/sea-front.webp) 0 0/1582px 112px repeat-x;transform:scaleY(-1);animation:tide2 90s linear infinite;-webkit-mask-image:linear-gradient(to top,#000 5%,rgba(0,0,0,.55) 35%,transparent 72%);mask-image:linear-gradient(to top,#000 5%,rgba(0,0,0,.55) 35%,transparent 72%);pointer-events:none}
+.books::after{content:"";position:absolute;left:0;right:0;top:0;height:260px;background:radial-gradient(ellipse 60% 100% at 50% 0,rgba(255,255,255,.12),rgba(255,255,255,0) 70%);pointer-events:none}
+.books>.wrap{position:relative;z-index:1}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:180px;height:120px;z-index:1;pointer-events:none;background:linear-gradient(rgba(205,238,252,0),rgba(205,238,252,.9))}
 @keyframes tide{to{background-position-x:-2966px}}
 @keyframes tide2{to{background-position-x:1582px}}
+@media (max-width:960px){@keyframes tide2{to{background-position-x:1300px}}}
 
 /* ---------- section scaffold ---------- */
 section{padding:90px 0;position:relative;overflow-x:clip}
@@ -91,7 +96,7 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 .sec-head p{margin:0;color:var(--muted);font-size:1.1rem}
 
 /* ---------- books ---------- */
-.books{background:radial-gradient(ellipse 70% 40% at 50% 8%,rgba(255,255,255,.28),rgba(255,255,255,0) 70%),linear-gradient(#3cc8f9,#2fa9ec 30%,#2384d6 70%,#183f8e)}
+.books{background:linear-gradient(#39c6fa,#36bdf5 8%,#2fa9ec 30%,#2384d6 70%,#183f8e)}
 .books .sec-head h2,.books .sec-head p{color:#fff}
 .books .eyebrow{color:#e9f7ff}
 .book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px}
@@ -212,6 +217,7 @@ footer a{color:#fff}
   .scene .lighthouse{height:74%;bottom:30%;right:0}
   .hero .sea.back{height:150px;background-size:2119px 150px;bottom:28px}
   .hero .sea.front{height:92px;background-size:1300px 92px}
+  .books::before{height:92px;background-size:1300px 92px}
   .hero::after{bottom:120px}
   .boat.noah{width:40%;left:33%;bottom:19%}.boat.tom{width:24%;left:18%;bottom:28%}.boat.oscar{width:31%;bottom:17%}.boat.elsie{width:25%;left:73%;bottom:17%}
   .review-grid{grid-template-columns:1fr}
@@ -247,8 +253,16 @@ footer a{color:#fff}
 <main id="top">
 <!-- HERO -->
 <section class="hero" aria-labelledby="hero-title">
-  <img class="cloud c1" src="img/cloud.webp" alt="">
-  <img class="cloud c2" src="img/cloud.webp" alt="">
+  <div class="clouds" aria-hidden="true">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:52vw;--t:90px;--w:280px;--o:0.9;--d:95s;--dl:-20s;--b:1px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:8vw;--t:175px;--w:210px;--o:0.7;--d:120s;--dl:-75s;--b:1.5px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:30vw;--t:60px;--w:160px;--o:0.55;--d:140s;--dl:-110s;--b:2px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:70vw;--t:250px;--w:330px;--o:0.6;--d:110s;--dl:-45s;--b:2px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:88vw;--t:140px;--w:120px;--o:0.45;--d:160s;--dl:-5s;--b:2.5px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:40vw;--t:320px;--w:240px;--o:0.4;--d:130s;--dl:-95s;--b:3px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:76vw;--t:40px;--w:230px;--o:0.75;--d:100s;--dl:-60s;--b:1.2px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:18vw;--t:210px;--w:150px;--o:0.5;--d:150s;--dl:-130s;--b:2px">
+  </div>
   <img class="gull" src="img/gull.webp" alt="">
   <div class="wrap hero-grid">
     <div class="hero-copy">
@@ -332,6 +346,11 @@ footer a{color:#fff}
 
 <!-- CHARACTERS -->
 <section class="cast" id="characters" aria-labelledby="cast-title">
+  <div class="clouds" aria-hidden="true">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:12vw;--t:8%;--w:260px;--o:0.45;--d:130s;--dl:-30s;--b:2px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:62vw;--t:38%;--w:190px;--o:0.35;--d:160s;--dl:-100s;--b:2.5px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:34vw;--t:70%;--w:300px;--o:0.3;--d:150s;--dl:-65s;--b:3px">
+  </div>
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow" style="color:#fff">Who's who</p>
@@ -369,6 +388,11 @@ footer a{color:#fff}
 
 <!-- REVIEWS -->
 <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+  <div class="clouds" aria-hidden="true">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:12vw;--t:8%;--w:260px;--o:0.45;--d:130s;--dl:-30s;--b:2px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:62vw;--t:38%;--w:190px;--o:0.35;--d:160s;--dl:-100s;--b:2.5px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:34vw;--t:70%;--w:300px;--o:0.3;--d:150s;--dl:-65s;--b:3px">
+  </div>
   <img class="review-gull" src="img/gull.webp" alt="">
   <div class="wrap">
     <div class="sec-head">
@@ -407,6 +431,11 @@ footer a{color:#fff}
 
 <!-- CONTACT -->
 <section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="clouds" aria-hidden="true">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:12vw;--t:8%;--w:260px;--o:0.45;--d:130s;--dl:-30s;--b:2px">
+    <img class="cloud flip" src="img/cloud.webp" alt="" style="--x:62vw;--t:38%;--w:190px;--o:0.35;--d:160s;--dl:-100s;--b:2.5px">
+    <img class="cloud" src="img/cloud.webp" alt="" style="--x:34vw;--t:70%;--w:300px;--o:0.3;--d:150s;--dl:-65s;--b:3px">
+  </div>
   <div class="wrap contact-grid">
     <div>
       <p class="eyebrow">Get in touch</p>
