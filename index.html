@@ -100,7 +100,10 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 .books .sec-head h2,.books .sec-head p{color:#fff}
 .books .eyebrow{color:#e9f7ff}
 .book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px}
-.book{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:start}
+.book{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:stretch}
+.book>.cover{align-self:start}
+.book>div:last-child{display:flex;flex-direction:column}
+.book .price{margin-top:auto;padding-top:.4rem}
 .book .cover{border-radius:10px 14px 14px 10px;box-shadow:-6px 0 0 #0e3d80 inset,0 14px 26px rgba(0,30,80,.35);aspect-ratio:595/624;overflow:hidden;transform:rotate(-2deg);transition:transform .25s;position:relative}
 .book:hover .cover{transform:rotate(0) scale(1.03)}
 .book .cover img{width:100%;height:100%;object-fit:cover}
