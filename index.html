@@ -55,20 +55,20 @@ header.scrolled::before{opacity:1}
 /* ---------- hero ---------- */
 .hero{position:relative;margin-top:-92px;padding:130px 0 0;background:radial-gradient(ellipse 55% 45% at 82% 30%,rgba(255,251,214,.9),rgba(255,251,214,0) 70%),radial-gradient(ellipse 60% 50% at 10% 0%,rgba(255,255,255,.5),rgba(255,255,255,0) 70%),linear-gradient(#5fb8ee,#9fd8f6 45%,#cdeefc 80%);overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:end;gap:24px;position:relative}
-.hero-copy{padding-bottom:150px;position:relative;z-index:3}
+.hero-copy{padding-bottom:235px;position:relative;z-index:6}
 .hero h1{font-size:clamp(2.5rem,6vw,4.6rem)}
 .hero h1 .small{display:block;font-size:.42em;letter-spacing:.06em;margin-bottom:.2em}
 .hero p.lede{font-size:1.2rem;max-width:30em;margin:1.2rem 0 1.8rem;color:#173b6d;font-weight:600}
 .hero .actions{display:flex;flex-wrap:wrap;gap:14px}
 .scene{position:relative;height:clamp(360px,44vw,560px)}
-.scene .lighthouse{position:absolute;right:4%;bottom:8%;height:88%;width:auto;z-index:1;filter:drop-shadow(0 8px 10px rgba(0,40,90,.25))}
+.scene .lighthouse{position:absolute;right:4%;bottom:21%;height:80%;width:auto;z-index:1;filter:drop-shadow(0 8px 10px rgba(0,40,90,.25))}
 .scene .beam{position:absolute;right:9%;top:16%;width:130%;height:120px;transform-origin:right center;background:radial-gradient(ellipse at right,rgba(255,250,200,.85),rgba(255,250,200,0) 70%);clip-path:polygon(100% 45%,0 0,0 100%,100% 55%);animation:sweep 7s ease-in-out infinite;z-index:1;mix-blend-mode:screen}
 @keyframes sweep{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
 .boat{position:absolute;z-index:3;filter:drop-shadow(0 6px 6px rgba(0,40,90,.2));animation:bob 4s ease-in-out infinite}
-.boat.tom{left:20%;bottom:16%;width:23%;animation-delay:-1s}
-.boat.noah{left:40%;bottom:9%;width:32%;animation-delay:-2.2s}
-.boat.oscar{left:-2%;bottom:7%;width:25%;animation-delay:-.4s}
-.boat.elsie{left:68%;bottom:3%;width:21%;animation-delay:-3s;z-index:4}
+.boat.tom{left:22%;bottom:25%;width:21%;animation-delay:-1s}
+.boat.noah{left:40%;bottom:16%;width:31%;animation-delay:-2.2s}
+.boat.oscar{left:-1%;bottom:15.5%;width:24%;animation-delay:-.4s}
+.boat.elsie{left:69%;bottom:13%;width:21%;animation-delay:-3s;z-index:4}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
 .gull{position:absolute;width:90px;top:120px;left:-120px;z-index:4;animation:fly 26s linear infinite}
 @keyframes fly{0%{transform:translate(0,0)}50%{transform:translate(60vw,-30px)}100%{transform:translate(120vw,10px)}}
@@ -76,8 +76,13 @@ header.scrolled::before{opacity:1}
 .cloud.c1{top:110px;left:46%;width:220px}
 .cloud.c2{top:190px;left:8%;width:160px;animation-duration:80s;opacity:.8}
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-40vw)}}
-.hero .sea{position:absolute;left:0;right:0;bottom:0;height:150px;background:url(img/sea-strip.webp) center bottom/auto 150px repeat-x;z-index:2;pointer-events:none}
-.hero .sea::after{content:"";position:absolute;left:0;right:0;bottom:0;height:55px;background:linear-gradient(rgba(60,200,249,0),#3cc8f9)}
+.hero .sea{position:absolute;left:0;right:0;pointer-events:none;background-repeat:repeat-x}
+.hero .sea.back{bottom:40px;height:210px;background-image:url(img/sea-back.webp);background-size:2966px 210px;z-index:2;animation:tide 160s linear infinite}
+.hero .sea.front{bottom:0;height:112px;background-image:url(img/sea-front.webp);background-size:1582px 112px;z-index:5;animation:tide2 90s linear infinite}
+.hero .sea.front::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(rgba(60,200,249,0),#3cc8f9 90%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:180px;height:120px;z-index:1;pointer-events:none;background:linear-gradient(rgba(205,238,252,0),rgba(205,238,252,.9))}
+@keyframes tide{to{background-position-x:-2966px}}
+@keyframes tide2{to{background-position-x:1582px}}
 
 /* ---------- section scaffold ---------- */
 section{padding:90px 0;position:relative;overflow-x:clip}
@@ -109,13 +114,13 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 
 /* ---------- story peek ---------- */
 .story{background:var(--night) url(img/night.webp) center/cover;color:#fff;padding:110px 0 130px;overflow:hidden}
-.story::before{content:"";position:absolute;inset:0;background:linear-gradient(#183f8e,rgba(24,63,142,0) 22%,rgba(24,63,142,0) 78%,#1d5fc0),linear-gradient(90deg,rgba(10,30,90,.55),rgba(10,30,90,0) 60%)}
+.story::before{content:"";position:absolute;inset:0;background:linear-gradient(#183f8e,rgba(24,63,142,0) 26%,rgba(24,63,142,0) 68%,#1d5fc0),linear-gradient(90deg,rgba(10,30,90,.55),rgba(10,30,90,0) 60%)}
 .story .wrap{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .story .bookbox{color:var(--text);font-size:1.15rem}
 .story .bookbox p{margin:0 0 .8em}
 .story h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:22px;text-shadow:0 3px 12px rgba(0,0,0,.4)}
 .story .eyebrow{color:var(--oscar)}
-.story .wave{width:100%;max-width:520px;margin-left:auto;animation:rock 5s ease-in-out infinite;transform-origin:30% 100%;filter:drop-shadow(0 20px 30px rgba(0,0,0,.35))}
+.story .wave{width:100%;max-width:540px;margin-left:auto;animation:rock 5s ease-in-out infinite;transform-origin:30% 100%;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 96%),linear-gradient(to right,transparent 0,#000 22%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 62%,transparent 96%),linear-gradient(to right,transparent 0,#000 22%);mask-composite:intersect}
 @keyframes rock{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 .boom{font-family:"Short Stack",cursive;color:var(--noah);font-size:1.3em}
 
@@ -204,8 +209,11 @@ footer a{color:#fff}
   .trade img{width:110px}
   .card{padding:26px 22px}
   .card.soon .peekers img{height:110px}.card.soon .peekers img:nth-child(2){height:84px}
-  .scene .lighthouse{height:78%;bottom:24%;right:0}
-  .boat.noah{width:40%;left:34%}.boat.tom{width:28%}.boat.oscar{width:32%}.boat.elsie{width:26%;left:72%}
+  .scene .lighthouse{height:74%;bottom:30%;right:0}
+  .hero .sea.back{height:150px;background-size:2119px 150px;bottom:28px}
+  .hero .sea.front{height:92px;background-size:1300px 92px}
+  .hero::after{bottom:120px}
+  .boat.noah{width:40%;left:33%;bottom:19%}.boat.tom{width:24%;left:18%;bottom:28%}.boat.oscar{width:31%;bottom:17%}.boat.elsie{width:25%;left:73%;bottom:17%}
   .review-grid{grid-template-columns:1fr}
   .cast-grid{grid-template-columns:1fr 1fr;gap:36px 14px}
   .char h3{font-size:1.4rem}
@@ -261,7 +269,8 @@ footer a{color:#fff}
       <img class="boat elsie" src="img/elsie.webp" alt="Elsie the little boat">
     </div>
   </div>
-  <div class="sea" aria-hidden="true"></div>
+  <div class="sea back" aria-hidden="true"></div>
+  <div class="sea front" aria-hidden="true"></div>
 </section>
 
 <!-- BOOKS -->
