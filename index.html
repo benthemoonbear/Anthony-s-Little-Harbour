@@ -72,9 +72,9 @@ header.scrolled::before{opacity:1}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
 .gull{position:absolute;width:90px;top:120px;left:-120px;z-index:4;animation:fly 26s linear infinite}
 @keyframes fly{0%{transform:translate(0,0)}50%{transform:translate(60vw,-30px)}100%{transform:translate(120vw,10px)}}
-.cloud{position:absolute;opacity:.95;z-index:1;animation:drift 60s linear infinite}
-.cloud.c1{top:110px;left:46%;width:220px}
-.cloud.c2{top:190px;left:8%;width:160px;animation-duration:80s;opacity:.8}
+.cloud{position:absolute;opacity:.9;z-index:1;animation:drift 60s linear infinite;filter:blur(1px)}
+.cloud.c1{top:95px;left:44%;width:270px}
+.cloud.c2{top:175px;left:6%;width:200px;animation-duration:80s;opacity:.65}
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-40vw)}}
 .hero .sea{position:absolute;left:0;right:0;pointer-events:none;background-repeat:repeat-x}
 .hero .sea.back{bottom:40px;height:210px;background-image:url(img/sea-back.webp);background-size:2966px 210px;z-index:2;animation:tide 160s linear infinite}
