@@ -139,9 +139,12 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 .medal img{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:92%;z-index:2;transition:transform .3s;filter:drop-shadow(0 6px 6px rgba(0,40,90,.25))}
 .char:hover .medal img{transform:translateX(-50%) translateY(-10px) rotate(-3deg)}
 .medal.tall img{width:auto;height:118%;bottom:8%}
+.medal.rise{overflow:hidden}
+.medal.rise img{width:auto;height:94%;bottom:-3%}
+.char:hover .medal.rise img{transform:translateX(-50%) translateY(-4px)}
 .medal.round{overflow:hidden}
 .medal.round img{bottom:0;width:100%}
-.char h3{color:#fff;font-size:1.9rem;letter-spacing:.06em;margin:18px 0 6px;text-shadow:0 3px 0 var(--title),0 6px 14px rgba(0,40,110,.35)}
+.char h3{color:var(--title);font-size:1.9rem;letter-spacing:.06em;margin:18px 0 6px;text-shadow:2px 2px 0 #fff,-2px 2px 0 #fff,2px -2px 0 #fff,-2px -2px 0 #fff,0 2px 0 #fff,2px 0 0 #fff,0 -2px 0 #fff,-2px 0 0 #fff,0 6px 14px rgba(0,40,110,.3)}
 .char p{margin:0 auto;max-width:18em;color:#0d2c5a;font-weight:600}
 
 /* ---------- about ---------- */
@@ -358,7 +361,7 @@ footer a{color:#fff}
     </div>
     <div class="cast-grid">
       <div class="char"><div class="medal"><img src="img/noah.webp" alt=""></div><h3>NOAH</h3><p>The brave lifeboat. When someone's in trouble at sea, Noah is first out of the harbour.</p></div>
-      <div class="char"><div class="medal tall"><img src="img/sophie.webp" alt=""></div><h3>SOPHIE</h3><p>The lighthouse. She stands proud and strong on the harbour wall, and her beam guides everyone home.</p></div>
+      <div class="char"><div class="medal rise"><img src="img/sophie.webp" alt=""></div><h3>SOPHIE</h3><p>The lighthouse. She stands proud and strong on the harbour wall, and her beam guides everyone home.</p></div>
       <div class="char"><div class="medal"><img src="img/oscar.webp" alt=""></div><h3>OSCAR</h3><p>A young dinghy with a big sense of adventure, who's still learning that the sea isn't always friendly.</p></div>
       <div class="char"><div class="medal tall"><img src="img/tom.webp" alt="" style="height:105%"></div><h3>TOM</h3><p>A cheerful little sailing boat, and one of Oscar's friends in the harbour.</p></div>
       <div class="char"><div class="medal round"><img src="img/peteandy.webp" alt=""></div><h3>PETE &amp; ANDY</h3><p>Noah's lifeboat crew, never far from a warm mug of tea.</p></div>
