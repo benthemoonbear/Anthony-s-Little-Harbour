@@ -27,6 +27,6 @@ If FormSubmit can't be reached, the customer is offered a ready-written email to
 
 ## To do
 
-- Check the short character descriptions for Tom and Pete & Andy with Anthony.
+- Check the short character description for Tom with Anthony.
 
 Illustrations © Tom Harding. Stories © Anthony Goode.
