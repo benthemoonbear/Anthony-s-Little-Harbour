@@ -103,7 +103,8 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 .book{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:stretch}
 .book>.cover{align-self:start}
 .book>div:last-child{display:flex;flex-direction:column}
-.book .price{margin-top:auto;padding-top:.4rem}
+.book .formats{margin-top:auto}
+.book .price{padding-top:.2rem}
 .book .cover{border-radius:10px 14px 14px 10px;box-shadow:-6px 0 0 #0e3d80 inset,0 14px 26px rgba(0,30,80,.35);aspect-ratio:595/624;overflow:hidden;transform:rotate(-2deg);transition:transform .25s;position:relative}
 .book:hover .cover{transform:rotate(0) scale(1.03)}
 .book .cover img{width:100%;height:100%;object-fit:cover}
@@ -199,6 +200,21 @@ footer a{color:#fff}
 
 
 /* ---------- order system ---------- */
+.formats{border:0;padding:0;margin:.9rem 0 .2rem;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.formats label{position:relative;cursor:pointer}
+.formats input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.formats span{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 6px;border:2px solid #cde7f6;border-radius:14px;background:#fff;text-align:center;line-height:1.2;transition:border-color .2s,background .2s}
+.formats b{font-size:.9rem;color:var(--ink)}
+.formats small{font-family:"Short Stack",cursive;color:var(--sea-deep);font-size:.95rem}
+.formats input:checked+span{border-color:var(--sea);background:linear-gradient(#f0f9ff,#dff2fd);box-shadow:0 0 0 3px rgba(29,155,224,.15)}
+.formats input:focus-visible+span{outline:3px solid var(--title);outline-offset:2px}
+.fmt-note{font-size:.85rem;color:var(--muted);margin:.3rem 0 0}
+.qty.off{opacity:.4}
+.qty button:disabled{cursor:not-allowed;background:none}
+.tag-pdf{grid-area:qty;justify-self:start;font-size:.78rem;font-weight:800;color:var(--sea-deep);background:var(--sky);border-radius:999px;padding:.25em .8em}
+.delivery[hidden],.pdf-note[hidden],.fmt-note[hidden]{display:none}
+.pdf-note{margin:-4px 0 14px;padding:10px 14px;border-radius:14px;background:#eaf6ff;color:var(--ink);font-size:.88rem;font-weight:600}
+
 .buy{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .qty{display:inline-flex;align-items:center;border:3px solid #10305f;border-radius:999px;background:#fff;overflow:hidden}
 .qty button{width:40px;height:44px;border:0;background:none;font:800 1.3rem Nunito,sans-serif;color:#10305f;cursor:pointer}
@@ -363,8 +379,14 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
         <div class="cover"><img src="img/cover-oscar.webp" alt="Cover of Oscar and the Little Harbour" data-cover="oscar"></div>
         <div>
           <h3>Oscar and the Little Harbour</h3>
-          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">Colouring page inside</span></div>
+          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">Colouring page inside</span><span class="pill">PDF eBook available</span></div>
           <p>Oscar, a young dinghy, thinks life inside the harbour walls is a bit boring, so he sets off to chase the waves. When the sea turns rough, he finds out just how many friends he has.</p>
+          <fieldset class="formats">
+            <legend class="sr">Format for Oscar and the Little Harbour</legend>
+            <label><input type="radio" name="fmt-oscar" value="oscar" checked><span><b>Paperback</b><small data-price="oscar"></small></span></label>
+            <label><input type="radio" name="fmt-oscar" value="oscar-pdf"><span><b>PDF eBook</b><small data-price="oscar-pdf"></small></span></label>
+          </fieldset>
+          <p class="fmt-note" hidden>Emailed to you once payment has cleared, to read on a tablet, phone or computer.</p>
           <p class="price">£9.99</p>
           <div class="buy">
             <div class="qty" data-qty aria-label="Quantity"><button type="button" data-step="-1" aria-label="One fewer">−</button><output>1</output><button type="button" data-step="1" aria-label="One more">+</button></div>
@@ -376,8 +398,14 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
         <div class="cover"><img src="img/cover-noah.webp" alt="Cover of Noah and the Little Harbour" data-cover="noah"></div>
         <div>
           <h3>Noah and the Little Harbour</h3>
-          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">New</span></div>
+          <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">New</span><span class="pill">PDF eBook available</span></div>
           <p>Noah the lifeboat is used to keeping watch, but his day gets far busier than expected when a mischievous boy starts an emergency.</p>
+          <fieldset class="formats">
+            <legend class="sr">Format for Noah and the Little Harbour</legend>
+            <label><input type="radio" name="fmt-noah" value="noah" checked><span><b>Paperback</b><small data-price="noah"></small></span></label>
+            <label><input type="radio" name="fmt-noah" value="noah-pdf"><span><b>PDF eBook</b><small data-price="noah-pdf"></small></span></label>
+          </fieldset>
+          <p class="fmt-note" hidden>Emailed to you once payment has cleared, to read on a tablet, phone or computer.</p>
           <p class="price">£9.99</p>
           <div class="buy">
             <div class="qty" data-qty aria-label="Quantity"><button type="button" data-step="-1" aria-label="One fewer">−</button><output>1</output><button type="button" data-step="1" aria-label="One more">+</button></div>
@@ -552,6 +580,7 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
         <label><input type="radio" name="delivery" value="post" checked form="order-form"> <span><b>UK post</b> <small id="post-price"></small></span></label>
         <label><input type="radio" name="delivery" value="collect" form="order-form"> <span><b>Collect in Matlock</b> <small>Free</small></span></label>
       </fieldset>
+      <p id="pdf-note" class="pdf-note" hidden></p>
       <dl class="totals"><dt>Books</dt><dd id="t-sub">£0.00</dd><dt>Delivery</dt><dd id="t-post">£0.00</dd><dt class="grand">Total</dt><dd class="grand" id="t-total">£0.00</dd></dl>
       <button type="button" class="btn wide" id="to-checkout">Checkout</button>
       <p class="fine">You'll pay by bank transfer. Anthony emails you his bank details after you order.</p>

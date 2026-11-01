@@ -16,11 +16,13 @@ The design follows the style of *Oscar and the Little Harbour*: painted sea and 
 
 Customers add books to a basket, choose UK post or free collection in Matlock, and place an order with their name, email and address. No payment is taken on the site: the order is emailed to Anthony, the customer gets an automatic confirmation with an order reference, and Anthony replies with bank details for payment by bank transfer (BACS). Shops and schools use the separate trade enquiry form.
 
+Each book is also sold as a **PDF eBook (£4.99)**. PDFs have no postage and are limited to one copy per order; a PDF-only order doesn't ask for an address. Anthony emails the PDF to the customer himself once their payment has cleared (the order email shows which items are PDFs).
+
 Forms are sent with [FormSubmit](https://formsubmit.co) (free, no server needed).
 
 **Before going live:**
 1. The very first order or enquiry triggers an activation email from FormSubmit to `contactanthony@anthonyslittleharbourseries.co.uk`. Anthony must click the link in it, or no orders will arrive. Send a test order yourself to trigger it.
-2. Check the postage prices in `js/shop.js` (currently placeholder figures: £3.50 for the first book, £1.00 for each extra).
+2. Check the postage prices in `js/shop.js` (currently placeholder figures: £3.50 for the first paperback, £1.00 for each extra; PDFs have no postage).
 3. Optional: once activated, FormSubmit gives a random alias for the email address; swap it into `js/shop.js` so Anthony's address isn't visible in the page source.
 
 If FormSubmit can't be reached, the customer is offered a ready-written email to send instead, so no order is lost.

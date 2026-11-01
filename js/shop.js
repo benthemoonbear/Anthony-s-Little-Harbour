@@ -3,12 +3,15 @@
    ---- Settings: change these to suit ---- */
 const SHOP = {
   email: 'contactanthony@anthonyslittleharbourseries.co.uk',
+  // Each format is its own item. PDF eBooks have no postage and are emailed by Anthony once payment clears.
   books: {
-    oscar: { title: 'Oscar and the Little Harbour', price: 9.99 },
-    noah:  { title: 'Noah and the Little Harbour',  price: 9.99 },
+    'oscar':     { title: 'Oscar and the Little Harbour', format: 'Paperback', price: 9.99, cover: 'oscar' },
+    'oscar-pdf': { title: 'Oscar and the Little Harbour', format: 'PDF eBook', price: 4.99, cover: 'oscar', digital: true },
+    'noah':      { title: 'Noah and the Little Harbour',  format: 'Paperback', price: 9.99, cover: 'noah' },
+    'noah-pdf':  { title: 'Noah and the Little Harbour',  format: 'PDF eBook', price: 4.99, cover: 'noah', digital: true },
   },
-  delivery: {
-    post:    { label: 'UK post',                    first: 3.50, extra: 1.00 }, // first book, then each extra book
+  delivery: { // for paperbacks only
+    post:    { label: 'UK post',                    first: 3.50, extra: 1.00 }, // first paperback, then each extra paperback
     collect: { label: 'Collect in Matlock (free)', first: 0,    extra: 0 },
   },
   maxPerBook: 20,
@@ -25,12 +28,36 @@ const SHOP = {
   try { basket = JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { basket = {}; }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(basket)); } catch (e) {} };
 
-  const count = () => Object.values(basket).reduce((a, b) => a + b, 0);
-  const subtotal = () => Object.entries(basket).reduce((t, [id, q]) => t + (SHOP.books[id]?.price || 0) * q, 0);
+  // drop anything no longer sold; PDFs are one copy each
+  Object.keys(basket).forEach(id => { if (!SHOP.books[id] || !(basket[id] > 0)) delete basket[id]; else if (SHOP.books[id].digital) basket[id] = 1; });
+  const items = () => Object.entries(basket).filter(([id, q]) => SHOP.books[id] && q > 0);
+  const count = () => items().reduce((a, [, q]) => a + q, 0);
+  const physical = () => items().filter(([id]) => !SHOP.books[id].digital).reduce((a, [, q]) => a + q, 0);
+  const digital = () => items().some(([id]) => SHOP.books[id].digital);
+  const name = id => `${SHOP.books[id].title} (${SHOP.books[id].format})`;
+  const maxFor = id => SHOP.books[id].digital ? 1 : SHOP.maxPerBook;
+  const subtotal = () => items().reduce((t, [id, q]) => t + SHOP.books[id].price * q, 0);
   const method = () => ($('input[name="delivery"]:checked') || {}).value || 'post';
-  const postage = () => { const n = count(), d = SHOP.delivery[method()]; return n ? d.first + d.extra * (n - 1) : 0; };
+  const postage = () => { const n = physical(), d = SHOP.delivery[method()]; return n ? d.first + d.extra * (n - 1) : 0; };
+  const needsAddress = () => physical() > 0 && method() === 'post';
 
   /* ---- quantity steppers on the book cards ---- */
+  const chosen = card => ($('input[type="radio"]:checked', card) || {}).value;
+  $$('.book').forEach(card => {
+    const sync = () => {
+      const id = chosen(card); if (!id) return;
+      const b = SHOP.books[id], out = $('[data-qty] output', card);
+      $('.price', card).textContent = gbp(b.price);
+      $$('[data-qty] button', card).forEach(x => x.disabled = !!b.digital);
+      $('[data-qty]', card).classList.toggle('off', !!b.digital);
+      if (b.digital) out.value = 1;
+      const note = $('.fmt-note', card); if (note) note.hidden = !b.digital;
+    };
+    $$('input[type="radio"]', card).forEach(r => r.addEventListener('change', sync));
+    $$('.formats [data-price]', card).forEach(el => el.textContent = gbp(SHOP.books[el.dataset.price].price));
+    sync();
+  });
+
   $$('[data-qty]').forEach(q => {
     const out = $('output', q);
     q.addEventListener('click', e => {
@@ -40,8 +67,8 @@ const SHOP = {
   });
 
   $$('[data-add]').forEach(btn => btn.addEventListener('click', () => {
-    const id = btn.dataset.add, q = +$('output', btn.closest('.buy')).value;
-    basket[id] = Math.min(SHOP.maxPerBook, (basket[id] || 0) + q);
+    const card = btn.closest('.book'), id = chosen(card) || btn.dataset.add, q = +$('output', btn.closest('.buy')).value;
+    basket[id] = Math.min(maxFor(id), (basket[id] || 0) + q);
     save(); render();
     btn.textContent = 'Added ✓'; btn.classList.add('added');
     setTimeout(() => { btn.textContent = 'Add to basket'; btn.classList.remove('added'); }, 1600);
@@ -63,12 +90,14 @@ const SHOP = {
     $('.basket-fab .n').textContent = n;
     const list = $('#basket-lines');
     list.innerHTML = '';
-    Object.entries(basket).forEach(([id, q]) => {
-      const b = SHOP.books[id]; if (!b || !q) return;
+    items().forEach(([id, q]) => {
+      const b = SHOP.books[id];
       const li = document.createElement('li');
-      li.innerHTML = `<img src="${$(`[data-cover="${id}"]`)?.getAttribute('src') || ''}" alt="">
-        <div class="ln"><b>${b.title}</b><span>${gbp(b.price)} each</span></div>
-        <div class="qty small" aria-label="Quantity"><button type="button" data-id="${id}" data-d="-1" aria-label="One fewer">−</button><output>${q}</output><button type="button" data-id="${id}" data-d="1" aria-label="One more">+</button></div>
+      const qty = b.digital ? `<span class="tag-pdf">Emailed to you</span>`
+        : `<div class="qty small" aria-label="Quantity"><button type="button" data-id="${id}" data-d="-1" aria-label="One fewer">−</button><output>${q}</output><button type="button" data-id="${id}" data-d="1" aria-label="One more">+</button></div>`;
+      li.innerHTML = `<img src="${$(`[data-cover="${b.cover}"]`)?.getAttribute('src') || ''}" alt="">
+        <div class="ln"><b>${b.title}</b><span>${b.format} · ${gbp(b.price)}${b.digital ? '' : ' each'}</span></div>
+        ${qty}
         <span class="lt">${gbp(b.price * q)}</span>
         <button type="button" class="rm" data-rm="${id}" aria-label="Remove ${b.title}">✕</button>`;
       list.appendChild(li);
@@ -77,11 +106,16 @@ const SHOP = {
     $('#basket-empty').hidden = !empty;
     $('#basket-filled').hidden = empty;
     $('#t-sub').textContent = gbp(subtotal());
-    $('#t-post').textContent = postage() ? gbp(postage()) : 'Free';
+    const phys = physical() > 0;
+    $('#t-post').textContent = !phys ? 'By email' : postage() ? gbp(postage()) : 'Free';
     $('#t-total').textContent = $('#t-total-2').textContent = gbp(subtotal() + postage());
     const d = SHOP.delivery.post;
-    $('#post-price').textContent = `${gbp(d.first)}${d.extra ? `, +${gbp(d.extra)} each extra book` : ''}`;
-    const post = method() === 'post';
+    $('#post-price').textContent = `${gbp(d.first)}${d.extra ? `, +${gbp(d.extra)} each extra paperback` : ''}`;
+    $('.delivery').hidden = !phys;
+    $('#pdf-note').hidden = !digital();
+    const pdfs = items().filter(([id]) => SHOP.books[id].digital).length, eb = pdfs > 1 ? 'eBooks' : 'eBook';
+    $('#pdf-note').textContent = phys ? `Your PDF ${eb} will be emailed to you once payment has cleared.` : `Your PDF ${eb} will be emailed to you once payment has cleared, so there's nothing to post.`;
+    const post = needsAddress();
     $('#address').hidden = !post;
     $$('#address [data-req]').forEach(i => i.required = post);
   }
@@ -91,7 +125,7 @@ const SHOP = {
     if (b.dataset.rm) delete basket[b.dataset.rm];
     if (b.dataset.d) {
       const v = (basket[b.dataset.id] || 0) + (+b.dataset.d);
-      if (v <= 0) delete basket[b.dataset.id]; else basket[b.dataset.id] = Math.min(SHOP.maxPerBook, v);
+      if (v <= 0) delete basket[b.dataset.id]; else basket[b.dataset.id] = Math.min(maxFor(b.dataset.id), v);
     }
     save(); render();
   });
@@ -122,21 +156,26 @@ const SHOP = {
     const f = e.target;
     if (!count()) return;
     if (f._honey.value) return; // spam trap
-    const r = ref(), post = method() === 'post';
-    const lines = Object.entries(basket).map(([id, q]) => `${q} × ${SHOP.books[id].title} @ ${gbp(SHOP.books[id].price)} = ${gbp(SHOP.books[id].price * q)}`);
-    const address = post ? [f.addr1.value, f.addr2.value, f.town.value, f.postcode.value.toUpperCase()].filter(Boolean).join(', ') : 'Collecting in Matlock';
-    const summary = [...lines, `Delivery (${SHOP.delivery[method()].label}): ${postage() ? gbp(postage()) : 'Free'}`, `TOTAL: ${gbp(subtotal() + postage())}`].join('\n');
+    const r = ref(), phys = physical() > 0, pdf = digital(), post = needsAddress();
+    const lines = items().map(([id, q]) => `${q} × ${name(id)} @ ${gbp(SHOP.books[id].price)} = ${gbp(SHOP.books[id].price * q)}`);
+    const address = !phys ? '— (PDF only, nothing to post)' : post ? [f.addr1.value, f.addr2.value, f.town.value, f.postcode.value.toUpperCase()].filter(Boolean).join(', ') : 'Collecting in Matlock';
+    const deliveryLabel = [phys && SHOP.delivery[method()].label, pdf && 'PDF by email'].filter(Boolean).join(' + ');
+    const summary = [...lines, phys ? `Delivery (${SHOP.delivery[method()].label}): ${postage() ? gbp(postage()) : 'Free'}` : 'Delivery: PDF by email (no postage)', `TOTAL: ${gbp(subtotal() + postage())}`].join('\n');
+    const next = [
+      phys && (post ? 'Your books will be posted as soon as payment has cleared.' : "Anthony will let you know when your books are ready to collect in Matlock."),
+      pdf && `Your PDF eBook${items().filter(([id]) => SHOP.books[id].digital).length > 1 ? 's' : ''} will be emailed to you as soon as payment has cleared.`,
+    ].filter(Boolean).join(' ');
     const payload = {
       _subject: `New book order ${r}: ${gbp(subtotal() + postage())}`,
       _template: 'table',
       _captcha: 'false',
-      _autoresponse: `Thank you for your order (${r}) from Anthony's Little Harbour Series!\n\n${summary}\n\nAnthony will email you shortly with bank details for payment by bank transfer (BACS). Please use ${r} as the payment reference. ${post ? 'Your books will be posted as soon as payment has cleared.' : "Anthony will let you know when your books are ready to collect in Matlock."}`,
+      _autoresponse: `Thank you for your order (${r}) from Anthony's Little Harbour Series!\n\n${summary}\n\nAnthony will email you shortly with bank details for payment by bank transfer (BACS). Please use ${r} as the payment reference. ${next}`,
       'Order reference': r,
       Name: f.name.value,
       email: f.email.value,
       Phone: f.phone.value || '—',
       Order: summary,
-      Delivery: SHOP.delivery[method()].label,
+      Delivery: deliveryLabel,
       Address: address,
       Notes: f.notes.value || '—',
     };
@@ -147,7 +186,7 @@ const SHOP = {
       $('#done-ref').textContent = r;
       $('#done-total').textContent = gbp(subtotal() + postage());
       $('#done-email').textContent = f.email.value;
-      $('#done-next').textContent = post ? 'Your books will be posted as soon as the payment has cleared.' : "He'll let you know when they're ready to collect in Matlock.";
+      $('#done-next').textContent = next;
       basket = {}; save(); f.reset(); render(); showView('done');
     } catch (err) {
       const a = $('#order-error a');
@@ -165,7 +204,7 @@ const SHOP = {
   $('#trade-form').addEventListener('submit', async e => {
     e.preventDefault();
     const f = e.target; if (f._honey.value) return;
-    const wants = Object.keys(SHOP.books).map(id => `${SHOP.books[id].title}: ${f['q_' + id].value || 0}`).join('\n');
+    const wants = Object.keys(SHOP.books).filter(id => !SHOP.books[id].digital && f['q_' + id]).map(id => `${SHOP.books[id].title}: ${f['q_' + id].value || 0}`).join('\n');
     const payload = {
       _subject: `Trade enquiry: ${f.business.value}`, _template: 'table', _captcha: 'false',
       _autoresponse: `Thank you for your trade enquiry. Anthony will be in touch soon about pricing and delivery.\n\n${wants}`,
