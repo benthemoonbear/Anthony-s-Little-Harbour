@@ -27,7 +27,6 @@ If FormSubmit can't be reached, the customer is offered a ready-written email to
 
 ## To do
 
-- Replace the stand-in *Noah and the Little Harbour* cover (built from book artwork) with the real cover image.
-- Check the short character descriptions for Tom, Elsie and Pete & Andy with Anthony.
+- Check the short character descriptions for Tom and Pete & Andy with Anthony.
 
 Illustrations © Tom Harding. Stories © Anthony Goode.

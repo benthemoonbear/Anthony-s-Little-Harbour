@@ -112,11 +112,6 @@ section{padding:90px 0;position:relative;overflow-x:clip}
 .pill{font-size:.8rem;font-weight:800;padding:.25em .8em;border-radius:999px;background:var(--sky);color:var(--ink)}
 .price{font-family:"Short Stack",cursive;font-size:1.6rem;color:var(--sea-deep);margin:.4rem 0 1rem}
 /* stand-in Noah cover built from book art */
-.cover.noah-cover{background:url(img/night.webp) 70% 50%/cover;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:12px 8px 10px;text-align:center}
-.noah-cover .t{font-family:"Short Stack",cursive;color:#fff;font-size:1.25rem;line-height:1;text-shadow:0 2px 0 var(--title),0 0 10px rgba(0,0,0,.4)}
-.noah-cover .t b{font-weight:400;display:block;font-size:1.45em}
-.noah-cover img{width:78%;height:auto!important;object-fit:contain!important;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}
-.noah-cover .a{font-family:"Short Stack",cursive;color:var(--oscar);font-size:.7rem;letter-spacing:.14em}
 .trade{margin-top:46px;display:flex;gap:22px;align-items:center}
 .trade img{width:150px;flex:none}
 
@@ -295,8 +290,7 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
   .char p{font-size:.9rem}
   .trade{flex-direction:column;align-items:flex-start}
   .logo span{font-size:.9rem}
-  .noah-cover .t{font-size:.85rem}
-}
+  }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -379,8 +373,7 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
         </div>
       </article>
       <article class="book bookbox">
-        <!-- Stand-in cover made from book artwork: swap for the real Noah cover image -->
-        <div class="cover noah-cover"><div class="t">Noah <span style="font-size:.6em">and the</span><b>Little Harbour</b></div><img src="img/noah.webp" alt="" data-cover="noah"><div class="a">ANTHONY GOODE</div></div>
+        <div class="cover"><img src="img/cover-noah.webp" alt="Cover of Noah and the Little Harbour" data-cover="noah"></div>
         <div>
           <h3>Noah and the Little Harbour</h3>
           <div class="meta"><span class="pill">Ages 4+</span><span class="pill">Picture book</span><span class="pill">New</span></div>
@@ -438,7 +431,7 @@ dialog.drawer::backdrop{background:rgba(10,40,100,.45);backdrop-filter:blur(3px)
       <div class="char"><div class="medal"><img src="img/oscar.webp" alt=""></div><h3>OSCAR</h3><p>A young dinghy with a big sense of adventure, who's still learning that the sea isn't always friendly.</p></div>
       <div class="char"><div class="medal tall"><img src="img/tom.webp" alt="" style="height:105%"></div><h3>TOM</h3><p>A cheerful little sailing boat, and one of Oscar's friends in the harbour.</p></div>
       <div class="char"><div class="medal round"><img src="img/peteandy.webp" alt=""></div><h3>PETE &amp; ANDY</h3><p>Noah's lifeboat crew, never far from a warm mug of tea.</p></div>
-      <div class="char"><div class="medal"><img src="img/elsie.webp" alt=""></div><h3>ELSIE</h3><p>A friendly little boat who's always happy bobbing safely inside the harbour walls.</p></div>
+      <div class="char"><div class="medal"><img src="img/elsie.webp" alt=""></div><h3>ELSIE</h3><p>A small cabin boat who's a little accident prone. She means well when she tries to help, but things tend to get unpredictable when she's involved!</p></div>
     </div>
   </div>
 </section>
